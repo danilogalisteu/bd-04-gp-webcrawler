@@ -1,6 +1,7 @@
 
 function normalizeURL(url) {
-    return url
+    const urlObj = new URL(url)
+    return urlObj.hostname + urlObj.pathname
 }
 
 
