@@ -4,7 +4,7 @@ const { test, expect } = require('@jest/globals')
 const { normalizeURL } = require('./crawl.js')
 
 
-test('remove protocol prefix', () => {
+test('normalizeURL: remove protocol prefix', () => {
     expect(
         normalizeURL('http://www.google.com')
     ).toBe('www.google.com');
@@ -13,7 +13,7 @@ test('remove protocol prefix', () => {
     ).toBe('www.google.com');
 });
 
-test('remove user/pass and port', () => {
+test('normalizeURL: remove user/pass and port', () => {
     expect(
         normalizeURL('https://user:pass@www.google.com')
     ).toBe('www.google.com');
@@ -25,7 +25,7 @@ test('remove user/pass and port', () => {
     ).toBe('www.google.com');
 });
 
-test('paths', () => {
+test('normalizeURL: paths', () => {
     expect(
         normalizeURL('https://www.google.com/about')
     ).toBe('www.google.com/about');
@@ -34,7 +34,7 @@ test('paths', () => {
     ).toBe('www.google.com/search/howsearchworks');
 });
 
-test('search params', () => {
+test('normalizeURL: search params', () => {
     expect(
         normalizeURL('https://www.google.com/search?query=JavaScript')
     ).toBe('www.google.com/search');
