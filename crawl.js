@@ -15,7 +15,16 @@ function normalizeURL(url) {
 
 
 function getURLsFromHTML(htmlBody, baseURL) {
-    return []
+    const dom = new JSDOM(htmlBody, {'url': baseURL})
+    const alist = dom.window.document.querySelectorAll('a')
+    const result = []
+    for (anchor of alist) {
+        link = anchor?.href
+        if (link) {
+            result.push(link)
+        }
+    }
+    return result
 }
 
 
