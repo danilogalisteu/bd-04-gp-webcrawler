@@ -7,22 +7,22 @@ const { normalizeURL } = require('./crawl.js')
 test('remove protocol prefix', () => {
     expect(
         normalizeURL('http://www.google.com')
-    ).toBe('www.google.com/');
+    ).toBe('www.google.com');
     expect(
         normalizeURL('https://www.google.com')
-    ).toBe('www.google.com/');
+    ).toBe('www.google.com');
 });
 
 test('remove user/pass and port', () => {
     expect(
         normalizeURL('https://user:pass@www.google.com')
-    ).toBe('www.google.com/');
+    ).toBe('www.google.com');
     expect(
         normalizeURL('https://www.google.com:432')
-    ).toBe('www.google.com/');
+    ).toBe('www.google.com');
     expect(
         normalizeURL('https://user:pass@www.google.com:432')
-    ).toBe('www.google.com/');
+    ).toBe('www.google.com');
 });
 
 test('paths', () => {
@@ -31,7 +31,7 @@ test('paths', () => {
     ).toBe('www.google.com/about');
     expect(
         normalizeURL('https://www.google.com/search/howsearchworks/?fg=1')
-    ).toBe('www.google.com/search/howsearchworks/');
+    ).toBe('www.google.com/search/howsearchworks');
 });
 
 test('search params', () => {
