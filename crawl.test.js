@@ -53,12 +53,15 @@ test('normalizeURL: search params', () => {
 });
 
 
-test('getURLsFromHTML: none or empty URL', () => {
+test('getURLsFromHTML: none or empty or invalid relative URL', () => {
     expect(
         getURLsFromHTML('<html><body></body></html>', 'https://www.boot.dev')
     ).toHaveLength(0);
     expect(
         getURLsFromHTML('<html><body><a><span>Courses</span></a></body></html>', 'https://www.boot.dev')
+    ).toHaveLength(0);
+    expect(
+        getURLsFromHTML('<html><body><a href="tracks/backend"><span>Courses</span></a></body>', 'https://www.boot.dev')
     ).toHaveLength(0);
 });
 

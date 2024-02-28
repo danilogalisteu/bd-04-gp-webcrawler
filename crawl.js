@@ -15,13 +15,23 @@ function normalizeURL(url) {
 
 
 function getURLsFromHTML(htmlBody, baseURL) {
-    const dom = new JSDOM(htmlBody, {'url': baseURL})
+    const dom = new JSDOM(htmlBody)
     const alist = dom.window.document.querySelectorAll('a')
     const result = []
     for (anchor of alist) {
         link = anchor?.href
         if (link) {
-            result.push(link)
+            // relative links must start with slash
+            if (link[0] == '/') {
+                result.push(new URL(link, baseURL).href)
+            } else {
+                try {
+                    result.push(new URL(link).href)
+                }
+                catch (err) {
+                    console.log(`${err.message}: ${link}`)
+                }
+            }
         }
     }
     return result
