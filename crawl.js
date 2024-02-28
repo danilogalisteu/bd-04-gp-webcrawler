@@ -19,7 +19,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
     const alist = dom.window.document.querySelectorAll('a')
     const result = []
     for (anchor of alist) {
-        link = anchor?.href
+        const link = anchor?.href
         if (link) {
             // relative links must start with slash
             if (link[0] == '/') {
@@ -38,7 +38,12 @@ function getURLsFromHTML(htmlBody, baseURL) {
 }
 
 
+async function crawlPage(currentURL) {
+}
+
+
 module.exports = {
     normalizeURL,
-    getURLsFromHTML
+    getURLsFromHTML,
+    crawlPage
 }
