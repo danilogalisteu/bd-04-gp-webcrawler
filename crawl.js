@@ -10,7 +10,7 @@ function normalizeURL(url) {
             urlNorm = urlNorm.slice(0, -1)
         }
     }
-    return urlNorm
+    return urlNorm.toLowerCase()
 }
 
 

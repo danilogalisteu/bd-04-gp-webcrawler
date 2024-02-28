@@ -34,6 +34,15 @@ test('normalizeURL: paths', () => {
     ).toBe('www.google.com/search/howsearchworks');
 });
 
+test('normalizeURL: capital letters', () => {
+    expect(
+        normalizeURL('https://www.GOOGLE.com/ABOUT')
+    ).toEqual('www.google.com/about');
+    expect(
+        normalizeURL('https://www.google.com/search/HOWSEARCHWORKS/?fg=1')
+    ).toBe('www.google.com/search/howsearchworks');
+});
+
 test('normalizeURL: search params', () => {
     expect(
         normalizeURL('https://www.google.com/search?query=JavaScript')
