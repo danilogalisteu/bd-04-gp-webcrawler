@@ -39,6 +39,24 @@ function getURLsFromHTML(htmlBody, baseURL) {
 
 
 async function crawlPage(currentURL) {
+    try {
+        const response = await fetch(currentURL)
+        const status = response.status
+        if (status >= 400) {
+            console.log(`fetch response error: ${status}`)
+            return
+        }
+        const ctype = response.headers.get('content-type')
+        if (!ctype.includes('text/html')) {
+            console.log(`fetch content error: ${ctype}`)
+            return
+        }
+        const content = await response.text()
+        console.log(`Page content: ${currentURL}\n${content}`)
+    }
+    catch (err) {
+        console.log(`fetch error: ${err}`)
+    }
 }
 
 
