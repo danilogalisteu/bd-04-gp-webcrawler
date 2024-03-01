@@ -38,25 +38,50 @@ function getURLsFromHTML(htmlBody, baseURL) {
 }
 
 
-async function crawlPage(currentURL) {
+async function crawlPage(baseURL, currentURL, pages) {
+    const baseURLObj = new URL(baseURL)
+    const currentURLObj = new URL(currentURL)
+    if (baseURLObj.hostname != currentURLObj.hostname) {
+        console.log(`URL from a different domain: ${currentURL}`)
+        return pages
+    }
+
+    const baseNormURL = normalizeURL(baseURL)
+    const currentNormURL = normalizeURL(currentURL)
+    if (currentNormURL in pages) {
+        console.log(`URL was already crawled: ${currentURL} [${pages[currentNormURL]}]`)
+        pages[currentNormURL] += 1
+        return pages
+    }
+    if (currentNormURL == baseNormURL) {
+        pages[currentNormURL] = 0
+    } else {
+        pages[currentNormURL] = 1
+    }
+
     try {
+        console.log(`fetching ${currentURL}...`)
         const response = await fetch(currentURL)
         const status = response.status
         if (status >= 400) {
-            console.log(`fetch response error: ${status}`)
-            return
+            console.log(`fetch response error on ${currentURL}: ${status}`)
+            return pages
         }
         const ctype = response.headers.get('content-type')
         if (!ctype.includes('text/html')) {
-            console.log(`fetch content error: ${ctype}`)
-            return
+            console.log(`fetch content error on ${currentURL}: ${ctype}`)
+            return pages
         }
         const content = await response.text()
-        console.log(`Page content: ${currentURL}\n${content}`)
+        const links = getURLsFromHTML(content, baseURL)
+        for (const link of links) {
+            pages = await crawlPage(baseURL, link, pages)
+        }
     }
     catch (err) {
-        console.log(`fetch error: ${err}`)
+        console.log(`fetch error on ${currentURL}: ${err}`)
     }
+    return pages
 }
 
 

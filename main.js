@@ -4,7 +4,7 @@ const { argv } = require('node:process');
 const { crawlPage } = require('./crawl.js')
 
 
-function main(){
+async function main(){
     if (argv.length < 3) {
         console.log('too few arguments')
         return
@@ -15,7 +15,9 @@ function main(){
     }
     const baseURL = argv[2]
     console.log(`webcrawler is starting at "${baseURL}"`)
-    crawlPage(baseURL)
+    let pages = new Object()
+    pages = await crawlPage(baseURL, baseURL, pages)
+    console.log(pages)
 }
 
 
