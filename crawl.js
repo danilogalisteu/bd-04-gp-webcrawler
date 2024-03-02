@@ -38,18 +38,22 @@ function getURLsFromHTML(htmlBody, baseURL) {
 }
 
 
-async function crawlPage(baseURL, currentURL, pages) {
+async function crawlPage(baseURL, currentURL, pages, verbose=false) {
     const baseURLObj = new URL(baseURL)
     const currentURLObj = new URL(currentURL)
     if (baseURLObj.hostname != currentURLObj.hostname) {
-        console.log(`URL from a different domain: ${currentURL}`)
+        if (verbose) {
+            console.log(`URL from a different domain: ${currentURL}`)
+        }
         return pages
     }
 
     const baseNormURL = normalizeURL(baseURL)
     const currentNormURL = normalizeURL(currentURL)
     if (currentNormURL in pages) {
-        console.log(`URL was already crawled: ${currentURL} [${pages[currentNormURL]}]`)
+        if (verbose) {
+            console.log(`URL was already crawled: ${currentURL} [${pages[currentNormURL]}]`)
+        }
         pages[currentNormURL] += 1
         return pages
     }
@@ -60,16 +64,22 @@ async function crawlPage(baseURL, currentURL, pages) {
     }
 
     try {
-        console.log(`fetching ${currentURL}...`)
+        if (verbose) {
+            console.log(`fetching ${currentURL}...`)
+        }
         const response = await fetch(currentURL)
         const status = response.status
         if (status >= 400) {
-            console.log(`fetch response error on ${currentURL}: ${status}`)
+            if (verbose) {
+                console.log(`fetch response error on ${currentURL}: ${status}`)
+            }
             return pages
         }
         const ctype = response.headers.get('content-type')
         if (!ctype.includes('text/html')) {
-            console.log(`fetch content error on ${currentURL}: ${ctype}`)
+            if (verbose) {
+                console.log(`fetch content error on ${currentURL}: ${ctype}`)
+            }
             return pages
         }
         const content = await response.text()
@@ -79,7 +89,9 @@ async function crawlPage(baseURL, currentURL, pages) {
         }
     }
     catch (err) {
-        console.log(`fetch error on ${currentURL}: ${err}`)
+        if (verbose) {
+            console.log(`fetch error on ${currentURL}: ${err}`)
+        }
     }
     return pages
 }
