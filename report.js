@@ -16,8 +16,12 @@ function sortObjectByValue(obj, ascending=true) {
 function printReport(pages) {
     console.log('Starting report...')
     const reportArray = sortObjectByValue(pages, ascending=false)
+    let padSize = 0
+    if (reportArray.length) {
+        padSize = reportArray[0][1].toString().length
+    }
     for (const item of reportArray) {
-        console.log(`Found ${item[1]} internal links to ${item[0]}`)
+        console.log(`Found ${item[1].toString().padStart(padSize, ' ')} internal link(s) to ${item[0]}`)
     }
 }
 
