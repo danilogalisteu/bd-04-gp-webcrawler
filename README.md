@@ -30,7 +30,7 @@ to install all dependencies. The application depends on the `jsdom` package, and
 
 Run the application with:
 ```bash
-npm start [URL]
+npm start <URL>
 ```
 
 Tests can be run with:
