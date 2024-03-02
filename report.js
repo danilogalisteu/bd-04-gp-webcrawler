@@ -15,7 +15,7 @@ function sortObjectByValue(obj, ascending=true) {
 
 function printReport(pages) {
     console.log('Starting report...')
-    const reportArray = sortObjectByValue(pages, ascending=False)
+    const reportArray = sortObjectByValue(pages, ascending=false)
     for (const item of reportArray) {
         console.log(`Found ${item[1]} internal links to ${item[0]}`)
     }
