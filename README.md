@@ -13,7 +13,7 @@ This console application crawls the given website and presents a report with the
 Clone this repository with:
 
 ```bash
-git clone https://github.com/danilogalisteu/bd-04-gp-webcrawler
+git clone https://github.com/danilogalisteu/bd-04-gp-webcrawler.git
 ```
 
 The application uses [`node.js`](https://nodejs.org/en/) as the Javascript runtime, [`nvm`](https://github.com/nvm-sh/nvm) for runtime version management and `npm`for package dependency management.
